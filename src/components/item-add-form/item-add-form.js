@@ -1,8 +1,7 @@
 import React, { Component } from "react";
 import './item-add-form.css';
 
-export default class ItemAddForm extends  Component {
-
+export default class ItemAddForm extends Component {
     state = {
         label: ''
     };
@@ -12,29 +11,34 @@ export default class ItemAddForm extends  Component {
             label: e.target.value
         });
     };
+
     onSubmit = (e) => {
         e.preventDefault();
-        this.props.onItemAdded(this.state.label);
+        this.props.onItemAdded(this.state.label.trim());
         this.setState({
             label: ''
         });
     };
+
     render() {
+        const isButtonDisabled = !this.state.label.trim();
+
         return (
-            <form className={ "item-add-form d-flex" }
-                  onSubmit={this.onSubmit}>
-
-                <input type={"text"}
-                       className={"form-control"}
-                       onChange = {this.onLabelChange}
-                       placeholder={"What need to be done"}
-                       value = {this.state.label} />
+            <form className={"item-add-form d-flex"} onSubmit={this.onSubmit}>
+                <input
+                    type="text"
+                    className="form-control"
+                    onChange={this.onLabelChange}
+                    placeholder="What needs to be done"
+                    value={this.state.label}
+                />
                 <button
-                    className={ "btn btn-outline-secondary" } >
+                    className="btn btn-outline-secondary"
+                    disabled={isButtonDisabled}
+                >
                     Add Item
-
                 </button>
             </form>
-        )
+        );
     }
 }
